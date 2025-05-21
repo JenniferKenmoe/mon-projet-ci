@@ -1,0 +1,32 @@
+name: CI Pipeline
+
+
+on: 
+  push:
+
+    branches: ["master"]
+  
+  pull_request:
+
+    branches: ["master"]
+
+jobs:
+  build-and-test:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.9", "3.11", "3.13"]
+
+    steps:
+      - name: checkout du code
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install tox and any other packages
+        run: pip install tox
+      - name: Run tox
+        # Run tox using the version of Python in `PATH`
+        run: tox -e py
