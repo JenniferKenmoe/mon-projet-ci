@@ -30,3 +30,6 @@ jobs:
       - name: Run tox
         # Run tox using the version of Python in `PATH`
         run: tox -e py
+      - name: Lint with flake8
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics || true
